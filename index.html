@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Swipe Delete</title>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0,width=device-width,user-scalable=0,maximum-scale=1.0"/>
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="yes" name="apple-touch-fullscreen">
+<meta content="telephone=no" name="format-detection">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<link rel="stylesheet" href="../lib/normalize.css">
+<style type="text/css">
+　　.container {min-width: 320px; max-width: 640px; width: 100%; margin: 0 auto;; background: #ccc; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 12px;}
+   .list{list-style: none;padding: 0;margin: 0;}
+   .list-title{width:100%;text-align:center;font-size:20px;padding:15px 0;background-color: #eee;}   
+   .list-item{position:relative;height: 50px;line-height: 50px;border-bottom: 1px solid #eee;}
+   .list-item-content{padding-left:30px;background-color:#fff;transition: transform .3s ease;}   
+   .btn-wrap{position: absolute;z-index: -1;width:100%;left:0;top:0}
+   .btn{display:inline-block;width: 70px;text-align: center;}
+   .btn-edit{background-color: orange;}
+   .btn-delete{background-color: red;}
+   .btn-mark{width:80px;background-color:#ddd}
+   .r{float:right}
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="list-title">Swipe-Delete List</div>
+        <ul class="list">
+            <li class="list-item">
+                <div class="list-item-content">
+                    <span>item1</span>                    
+                </div>
+                <div class="btn-wrap">
+                    <span class="btn btn-edit">编辑</span>
+                    <span class="r">
+                        <span class="btn btn-mark">标记未读</span><!--                 
+                        --><span class="btn btn-delete">删除</span>                                         
+                    </span>
+                </div>
+            </li>
+            <li class="list-item">
+                <div class="list-item-content">
+                    <span>item2</span>                    
+                </div>
+                <div class="btn-wrap">
+                    <span class="btn btn-edit">编辑</span>
+                    <span class="r">
+                        <span class="btn btn-mark">标记未读</span><!--                 
+                        --><span class="btn btn-delete">删除</span>                                         
+                    </span>
+                </div>
+            </li>
+            <li class="list-item">
+                <div class="list-item-content">
+                    <span>item3</span>                    
+                </div>
+                <div class="btn-wrap">
+                    <span class="btn btn-edit">编辑</span>
+                    <span class="r">
+                        <span class="btn btn-mark">标记未读</span><!--                 
+                        --><span class="btn btn-delete">删除</span>                                         
+                    </span>
+                </div>
+            </li>
+            <li class="list-item">
+                <div class="list-item-content">
+                    <span>item4</span>                    
+                </div>
+                <div class="btn-wrap">
+                    <span class="btn btn-edit">编辑</span>
+                    <span class="r">
+                        <span class="btn btn-mark">标记未读</span><!--                 
+                        --><span class="btn btn-delete">删除</span>                                         
+                    </span>
+                </div>
+            </li>
+            <li class="list-item">
+                <div class="list-item-content">
+                    <span>item5</span>                    
+                </div>
+                <div class="btn-wrap">
+                    <span class="btn btn-edit">编辑</span>
+                    <span class="r">
+                        <span class="btn btn-mark">标记未读</span><!--                 
+                        --><span class="btn btn-delete">删除</span>                                         
+                    </span>
+                </div>
+            </li>
+            <li class="list-item">
+                <div class="list-item-content">
+                    <span>item6</span>                    
+                </div>
+                <div class="btn-wrap">
+                    <span class="btn btn-edit">编辑</span>
+                    <span class="r">
+                        <span class="btn btn-mark">标记未读</span><!--                 
+                        --><span class="btn btn-delete">删除</span>                                         
+                    </span>
+                </div>
+            </li>
+            <li class="list-item">
+                <div class="list-item-content">
+                    <span>item7</span>                    
+                </div>
+                <div class="btn-wrap">
+                    <span class="btn btn-edit">编辑</span>
+                    <span class="r">
+                        <span class="btn btn-mark">标记未读</span><!--                 
+                        --><span class="btn btn-delete">删除</span>                                         
+                    </span>
+                </div>
+            </li>
+            <li class="list-item">
+                <div class="list-item-content">
+                    <span>item8</span>                    
+                </div>
+                <div class="btn-wrap">
+                    <span class="btn btn-edit">编辑</span>
+                    <span class="r">
+                        <span class="btn btn-mark">标记未读</span><!--                 
+                        --><span class="btn btn-delete">删除</span>                                         
+                    </span>
+                </div>
+            </li>
+            <li class="list-item">
+                <div class="list-item-content">
+                    <span>item9</span>                    
+                </div>
+                <div class="btn-wrap">
+                    <span class="btn btn-edit">编辑</span>
+                    <span class="r">
+                        <span class="btn btn-mark">标记未读</span><!--                 
+                        --><span class="btn btn-delete">删除</span>                                         
+                    </span>
+                </div>
+            </li>
+            <li class="list-item">
+                <div class="list-item-content">
+                    <span>item10</span>                    
+                </div>
+                <div class="btn-wrap">
+                    <span class="btn btn-edit">编辑</span>
+                    <span class="r">
+                        <span class="btn btn-mark">标记未读</span><!--                 
+                        --><span class="btn btn-delete">删除</span>                                         
+                    </span>
+                </div>
+            </li>
+        </ul>
+   </div>
+   <script>
+       var oList = document.querySelector('.list'),
+           aListItem = document.querySelectorAll('.list-item-content'),
+           gStartX;
+       aListItem.forEach(function(item){
+           fSwipeItem(item);
+       });
+
+       function fSwipeItem(oListItem){
+            oListItem.addEventListener('touchstart',function(e){             
+                gStartX = event.touches[0].clientX;
+                oList.querySelectorAll('.j-open').forEach(function(item){
+                    item.style.transform = 'translate3d(0,0,0)';
+                    item.className = item.className.replace(/ j-open/,'');
+                });        
+                var oItem = e.target;
+                oItem.className = oItem.className += ' j-open';
+            });
+            oListItem.addEventListener('touchmove',function(e){
+                e.preventDefault();                             
+                console.log(e.touches[0])                
+                var nOffsetX = e.touches[0].clientX - gStartX,
+                    oItem = e.target;
+                if(-150 < nOffsetX < 70){
+                    oItem.style.transform = 'translate3d(' + nOffsetX + 'px,0,0)';               
+                }
+            });
+            oListItem.addEventListener('touchend',function(e){
+                var oItem = e.target,
+                    nOffsetX = fGetTranslate(oItem.style.transform)[0]; 
+                if(nOffsetX < -35){
+                    nOffsetX = -150;
+                }
+                else if(nOffsetX > 35){
+                    nOffsetX = 70;
+                }
+                else{
+                    nOffsetX = 0;
+                }
+                oItem.style.transform = 'translate3d(' + nOffsetX + 'px,0,0)';  
+            });
+       }    
+       
+       function fGetTranslate(sTransform){
+           var aT = sTransform.split('(');
+           if(aT.length > 1){
+                aT = aT[1].split(')');
+                aT = aT[0].split(',');
+                aT = aT.map(function(item){
+                    return parseInt(item);
+                });
+           }
+           else{
+               aT = [0,0,0];
+           }
+           return aT;
+       }
+   </script>	
+</body>
+</html>
+
