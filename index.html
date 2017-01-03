@@ -87,58 +87,15 @@
         <div id="list-wrap"></div>
     </div>
     <script>
-        var json = [{
-            text: 'item1',
-            edit: 'edit',
-            mark: 'mark',
-            delete: 'delete'
-        }, {
-            text: 'item2',
-            edit: 'edit',
-            mark: 'mark',
-            delete: 'delete'
-        }, {
-            text: 'item3',
-            edit: 'edit',
-            mark: 'mark',
-            delete: 'delete'
-        }, {
-            text: 'item4',
-            edit: 'edit',
-            mark: 'mark',
-            delete: 'delete'
-        }, {
-            text: 'item5',
-            edit: 'edit',
-            mark: 'mark',
-            delete: 'delete'
-        }, {
-            text: 'item6',
-            edit: 'edit',
-            mark: 'mark',
-            delete: 'delete'
-        }, {
-            text: 'item7',
-            edit: 'edit',
-            mark: 'mark',
-            delete: 'delete'
-        }, {
-            text: 'item8',
-            edit: 'edit',
-            mark: 'mark',
-            delete: 'delete'
-        }, {
-            text: 'item9',
-            edit: 'edit',
-            mark: 'mark',
-            delete: 'delete'
-        }, {
-            text: 'item10',
-            edit: 'edit',
-            mark: 'mark',
-            delete: 'delete'
-        }];
-
+    var json = [1,2,3,4,5,6,7,8,9,10].map(function(item){
+        return {
+            text:item,
+            edit:'edit',
+            mark:'mark',
+            delete:'delete'
+        }
+    });
+        
         function ItemSlider(opts) {
             this.wrap = opts.wrap;
             this.list = opts.list;
@@ -192,7 +149,7 @@
                     var oItem = e.target;
                     if (oItem.className.indexOf('list-item-content') > -1) {
                         var nOffsetX = e.touches[0].pageX - self.offsetX;
-                        if (-150 < nOffsetX < 70) {
+                        if (-150 < nOffsetX && nOffsetX < 70) {
                             oItem.style.webkitTransform = 'translate3d(' + nOffsetX + 'px,0,0)';
                         }
                     }
