@@ -87,15 +87,15 @@
         <div id="list-wrap"></div>
     </div>
     <script>
-    var json = [1,2,3,4,5,6,7,8,9,10].map(function(item){
-        return {
-            text:'item' + item,
-            edit:'编辑',
-            mark:'标记未读',
-            delete:'删除'
-        }
-    });
-        
+        var json = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function(item) {
+            return {
+                text: 'item' + item,
+                edit: '编辑',
+                mark: '标记未读',
+                delete: '删除'
+            }
+        });
+
         function ItemSlider(opts) {
             this.wrap = opts.wrap;
             this.list = opts.list;
@@ -111,23 +111,23 @@
             fRenderDom: function() {
                 var ul = document.createElement('ul');
                 ul.className = 'list';
-                this.list.forEach(function(item, index) {
+                ul.innerHTML = this.list.reduce(function(pre,cur){
                     var aLi = [
                         '<li class="list-item">',
                         '<div class="list-item-content">',
-                        '<span>' + item.text + '</span>',
+                        '<span>' + cur.text + '</span>',
                         '</div>',
                         '<div class="btn-wrap">',
-                        '<span class="btn btn-edit">' + item.edit + '</span>',
+                        '<span class="btn btn-edit">' + cur.edit + '</span>',
                         '<span class="r">',
-                        '<span class="btn btn-mark">' + item.mark + '</span><!--',
-                        '--><span class="btn btn-delete">' + item.delete + '</span>',
+                        '<span class="btn btn-mark">' + cur.mark + '</span><!--',
+                        '--><span class="btn btn-delete">' + cur.delete + '</span>',
                         '</span>',
                         '</div>',
                         '</li>',
                     ];
-                    ul.insertAdjacentHTML('beforeend', aLi.join(''));
-                });
+                    return pre + aLi.join('');
+                },'');
                 this.wrap.appendChild(ul);
             },
             fBindEvent: function() {
