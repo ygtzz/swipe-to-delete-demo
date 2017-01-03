@@ -10,7 +10,6 @@
     <meta content="telephone=no" name="format-detection">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <link rel="stylesheet" href="./lib/normalize.css" />
-    <link rel="stylesheet" href="./lib/simpScroller.css" />
     <style type="text/css">
         .container {
             min-width: 320px;
@@ -21,14 +20,13 @@
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 12px;
         }
-        .list-wrap{}
+        .list-wrap {}
         .list {
             list-style: none;
             padding: 0;
             margin: 0;
             overflow: auto;
         }
-        
         .list-title {
             width: 100%;
             text-align: center;
@@ -36,14 +34,12 @@
             padding: 15px 0;
             background-color: #eee;
         }
-        
         .list-item {
             position: relative;
             height: 50px;
             line-height: 50px;
             border-bottom: 1px solid #eee;
         }
-        
         .list-item-content {
             padding-left: 30px;
             background-color: #fff;
@@ -52,7 +48,6 @@
             /*btn-wrap before no need*/
             z-index: 1
         }
-        
         .btn-wrap {
             position: absolute;
             width: 100%;
@@ -60,44 +55,41 @@
             right: 0;
             top: 0
         }
-        
         .btn {
             display: inline-block;
             width: 70px;
             text-align: center;
         }
-        
         .btn-edit {
             background-color: orange;
         }
-        
         .btn-delete {
             background-color: red;
         }
-        
         .btn-mark {
             width: 80px;
             background-color: #ddd
         }
-        
         .r {
             float: right
         }
-        .vertical {
-	        height: 450px;
-	        overflow: hidden;
-        }
+       
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="list-title">Swipe-Delete List</div>
-        <div id="list-wrap" class="vertical"></div>
+        <div id="xscroll">
+            <div class="xs-container">
+                <div id="list-wrap" class="xs-content">
+                </div>
+            </div>
+        </div>
     </div>
-    <script src="./lib/simpScroller-min.js"></script>
+    <script src="./lib/iscroll.js"></script>
     <script>
-        var json = Array.apply(null,{length:20}).map(function(item,index) {
+        var json = Array.apply(null, { length: 20 }).map(function(item,index) {
             return {
                 text: 'item' + (index+1),
                 edit: '编辑',
@@ -105,7 +97,7 @@
                 delete: '删除'
             }
         });
-
+        var myScroll;
         function ItemSlider(opts) {
             this.wrap = opts.wrap;
             this.list = opts.list;
@@ -143,7 +135,7 @@
                     return pre + aLi.join('');
                 }, '');
                 this.wrap.appendChild(ul);
-                simpScroller(this.wrap);
+                myScroll = new IScroll(this.wrap);
             },
             fBindEvent: function() {
                 var self = this;
@@ -152,7 +144,7 @@
                     if (oItem.className.indexOf('list-item-content') > -1) {
                         self.offsetX = e.touches[0].pageX;
                         self.offsetY = e.touches[0].pageY;
-                        Array.prototype.forEach.call(self.wrap.querySelectorAll('.j-open'),function(item){
+                        Array.prototype.forEach.call(self.wrap.querySelectorAll('.j-open'), function(item) {
                             item.style.webkitTransform = 'translate3d(0,0,0)';
                             item.className = item.className.replace(/ j-open/, '');
                         });
@@ -181,7 +173,7 @@
                             nOffsetX = self.fGetTranslate(oItem.style.webkitTransform)[0],
                             leftBoundary = self.leftBoundary,
                             rightBoundary = self.rightBoundary;
-                            
+
                         if (endTime - startTime > 300) {
                             if (nOffsetX < -boundary) {
                                 nOffsetX = leftBoundary;
@@ -191,7 +183,7 @@
                                 nOffsetX = 0;
                             }
                         } else {
-                            
+
                             if (nOffsetX < -boundary) {
                                 nOffsetX = leftBoundary;
                             } else if (nOffsetX >= boundary) {
@@ -200,11 +192,11 @@
                                 nOffsetX = 0;
                             }
                         }
-                        self.fAnimItem(oItem,nOffsetX);
+                        self.fAnimItem(oItem, nOffsetX);
                     }
                 });
             },
-            fAnimItem:function(oItem,nOffsetX){
+            fAnimItem: function(oItem, nOffsetX) {
                 oItem.style.webkitTransition = '-webkit-transform .2s ease-out';
                 oItem.style.webkitTransform = 'translate3d(' + nOffsetX + 'px,0,0)';
             },
