@@ -73,19 +73,17 @@
         .r {
             float: right
         }
-       
+        .vertical{
+            height:450px;
+            overflow: hidden;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="list-title">Swipe-Delete List</div>
-        <div id="xscroll">
-            <div class="xs-container">
-                <div id="list-wrap" class="xs-content">
-                </div>
-            </div>
-        </div>
+        <div id="list-wrap" class="vertical"></div>
     </div>
     <script src="./lib/iscroll.js"></script>
     <script>
