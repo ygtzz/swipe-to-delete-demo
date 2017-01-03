@@ -46,13 +46,17 @@
             padding-left: 30px;
             background-color: #fff;
             -webkit-transition: -webkit-transform .3s ease;
+            position: relative;
+            /*btn-wrap before no need*/
+            z-index:1
         }
         
         .btn-wrap {
             position: absolute;
-            z-index: -1;
+            /*z-index: -1;*/
             width: 100%;
-            left: 0;
+            height:100%;
+            right: 0;
             top: 0
         }
         
@@ -123,7 +127,7 @@
                         '<span class="btn btn-mark">' + cur.mark + '</span><!--',
                         '--><span class="btn btn-delete">' + cur.delete + '</span>',
                         '</span>',
-                        '</div>',
+                        '</div>',          
                         '</li>',
                     ];
                     return pre + aLi.join('');
