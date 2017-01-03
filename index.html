@@ -20,12 +20,12 @@
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 12px;
         }
-        .list-wrap{overflow:scroll}
+        .list-wrap{}
         .list {
             list-style: none;
             padding: 0;
             margin: 0;
-            overflow: scroll;
+            overflow: auto;
         }
         
         .list-title {
@@ -54,7 +54,6 @@
         
         .btn-wrap {
             position: absolute;
-            /*z-index: -1;*/
             width: 100%;
             height: 100%;
             right: 0;
@@ -112,6 +111,7 @@
         ItemSlider.prototype = {
             fInit: function() {
                 this.offsetX = 0;
+                this.offsetY = 0;
                 this.startTime = 0;
                 this.leftBoundary = -150;
                 this.rightBoundary = 70;
@@ -144,6 +144,7 @@
                     var oItem = e.target;
                     if (oItem.className.indexOf('list-item-content') > -1) {
                         self.offsetX = e.touches[0].pageX;
+                        self.offsetY = e.touches[0].pageY;
                         Array.prototype.forEach.call(self.wrap.querySelectorAll('.j-open'),function(item){
                             item.style.webkitTransform = 'translate3d(0,0,0)';
                             item.className = item.className.replace(/ j-open/, '');
@@ -156,8 +157,9 @@
                     e.preventDefault();
                     var oItem = e.target;
                     if (oItem.className.indexOf('list-item-content') > -1) {
-                        var nOffsetX = e.touches[0].pageX - self.offsetX;
-                        if (self.leftBoundary < nOffsetX && nOffsetX < self.rightBoundary) {
+                        var nOffsetX = e.touches[0].pageX - self.offsetX,
+                            nOffsetY = e.touches[0].pageY - self.offsetY;
+                        if (nOffsetY < 5 && self.leftBoundary < nOffsetX && nOffsetX < self.rightBoundary) {
                             oItem.style.webkitTransition = '-webkit-transform 0 ease-out';
                             oItem.style.webkitTransform = 'translate3d(' + nOffsetX + 'px,0,0)';
                         }
