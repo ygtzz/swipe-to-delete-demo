@@ -9,7 +9,8 @@
     <meta content="yes" name="apple-touch-fullscreen">
     <meta content="telephone=no" name="format-detection">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <link rel="stylesheet" href="./lib/normalize.css">
+    <link rel="stylesheet" href="./lib/normalize.css" />
+    <link rel="stylesheet" href="./lib/simpScroller.css" />
     <style type="text/css">
         .container {
             min-width: 320px;
@@ -82,16 +83,21 @@
         .r {
             float: right
         }
+        .vertical {
+	        height: 450px;
+	        overflow: hidden;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="list-title">Swipe-Delete List</div>
-        <div id="list-wrap"></div>
+        <div id="list-wrap" class="vertical"></div>
     </div>
+    <script src="./lib/simpScroller-min.js"></script>
     <script>
-        var json = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function(item) {
+        var json = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15].map(function(item) {
             return {
                 text: 'item' + item,
                 edit: '编辑',
@@ -137,6 +143,7 @@
                     return pre + aLi.join('');
                 }, '');
                 this.wrap.appendChild(ul);
+                simpScroller(this.wrap);
             },
             fBindEvent: function() {
                 var self = this;
