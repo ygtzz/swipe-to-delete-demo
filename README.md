@@ -2,7 +2,11 @@
 
 a moblie swipe to delete demo
 
-##Preview
+## Preview
 
 ![swipe delete](./imgs/swipe-del1.png)
 ![swipe edit](./imgs/swipe-del2.png)
+
+## License
+
+MIT
