@@ -20,11 +20,12 @@
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 12px;
         }
-        
+        .list-wrap{overflow:scroll}
         .list {
             list-style: none;
             padding: 0;
             margin: 0;
+            overflow: scroll;
         }
         
         .list-title {
@@ -45,17 +46,17 @@
         .list-item-content {
             padding-left: 30px;
             background-color: #fff;
-            -webkit-transition: -webkit-transform .3s ease;
+            -webkit-transition: -webkit-transform .2s ease;
             position: relative;
             /*btn-wrap before no need*/
-            z-index:1
+            z-index: 1
         }
         
         .btn-wrap {
             position: absolute;
             /*z-index: -1;*/
             width: 100%;
-            height:100%;
+            height: 100%;
             right: 0;
             top: 0
         }
@@ -111,11 +112,14 @@
         ItemSlider.prototype = {
             fInit: function() {
                 this.offsetX = 0;
+                this.startTime = 0;
+                this.leftBoundary = -150;
+                this.rightBoundary = 70;
             },
             fRenderDom: function() {
                 var ul = document.createElement('ul');
                 ul.className = 'list';
-                ul.innerHTML = this.list.reduce(function(pre,cur){
+                ul.innerHTML = this.list.reduce(function(pre, cur) {
                     var aLi = [
                         '<li class="list-item">',
                         '<div class="list-item-content">',
@@ -127,11 +131,11 @@
                         '<span class="btn btn-mark">' + cur.mark + '</span><!--',
                         '--><span class="btn btn-delete">' + cur.delete + '</span>',
                         '</span>',
-                        '</div>',          
+                        '</div>',
                         '</li>',
                     ];
                     return pre + aLi.join('');
-                },'');
+                }, '');
                 this.wrap.appendChild(ul);
             },
             fBindEvent: function() {
@@ -140,12 +144,12 @@
                     var oItem = e.target;
                     if (oItem.className.indexOf('list-item-content') > -1) {
                         self.offsetX = e.touches[0].pageX;
-                        //alert(self.wrap.querySelectorAll('.j-open').length)
-                        self.wrap.querySelectorAll('.j-open').forEach(function(item) {
+                        Array.prototype.forEach.call(self.wrap.querySelectorAll('.j-open'),function(item){
                             item.style.webkitTransform = 'translate3d(0,0,0)';
                             item.className = item.className.replace(/ j-open/, '');
                         });
-                        oItem.className = oItem.className += ' j-open';
+                        oItem.className += ' j-open';
+                        self.startTime = +new Date();
                     }
                 });
                 this.wrap.addEventListener('touchmove', function(e) {
@@ -153,7 +157,8 @@
                     var oItem = e.target;
                     if (oItem.className.indexOf('list-item-content') > -1) {
                         var nOffsetX = e.touches[0].pageX - self.offsetX;
-                        if (-150 < nOffsetX && nOffsetX < 70) {
+                        if (self.leftBoundary < nOffsetX && nOffsetX < self.rightBoundary) {
+                            oItem.style.webkitTransition = '-webkit-transform 0 ease-out';
                             oItem.style.webkitTransform = 'translate3d(' + nOffsetX + 'px,0,0)';
                         }
                     }
@@ -161,21 +166,38 @@
                 this.wrap.addEventListener('touchend', function(e) {
                     var oItem = e.target;
                     if (oItem.className.indexOf('list-item-content') > -1) {
-                        var nOffsetX = self.fGetTranslate(oItem.style.transform)[0];
-                        if (nOffsetX < -35) {
-                            nOffsetX = -150;
-                        } else if (nOffsetX > 35) {
-                            nOffsetX = 70;
+                        var endTime = +new Date(),
+                            startTime = self.startTime,
+                            boundary = 35,
+                            nOffsetX = self.fGetTranslate(oItem.style.webkitTransform)[0],
+                            leftBoundary = self.leftBoundary,
+                            rightBoundary = self.rightBoundary;
+                            
+                        if (endTime - startTime > 300) {
+                            if (nOffsetX < -boundary) {
+                                nOffsetX = leftBoundary;
+                            } else if (nOffsetX >= boundary) {
+                                nOffsetX = rightBoundary;
+                            } else {
+                                nOffsetX = 0;
+                            }
                         } else {
-                            nOffsetX = 0;
+                            
+                            if (nOffsetX < -boundary) {
+                                nOffsetX = leftBoundary;
+                            } else if (nOffsetX >= boundary) {
+                                nOffsetX = rightBoundary;
+                            } else {
+                                nOffsetX = 0;
+                            }
                         }
-                        oItem.style.webkitTransform = 'translate3d(' + nOffsetX + 'px,0,0)';
+                        self.fAnimItem(oItem,nOffsetX);
                     }
                 });
-                // var aListItem = document.querySelectorAll('.list-item-content');
-                // aListItem.forEach(function(item) {
-                //     self.fBindItem(item);
-                // });
+            },
+            fAnimItem:function(oItem,nOffsetX){
+                oItem.style.webkitTransition = '-webkit-transform .2s ease-out';
+                oItem.style.webkitTransform = 'translate3d(' + nOffsetX + 'px,0,0)';
             },
             fGetTranslate: function(sTransform) {
                 var aT = sTransform.split('(');
@@ -195,59 +217,6 @@
             wrap: document.getElementById('list-wrap'),
             list: json
         });
-        // var oList = document.querySelector('.list'),
-        //     aListItem = document.querySelectorAll('.list-item-content'),
-        //     gStartX;
-        // aListItem.forEach(function(item) {
-        //     fSwipeItem(item);
-        // });
-
-        // function fSwipeItem(oListItem) {
-        //     oListItem.addEventListener('touchstart', function(e) {
-        //         gStartX = event.touches[0].pageX;
-        //         oList.querySelectorAll('.j-open').forEach(function(item) {
-        //             item.style.transform = 'translate3d(0,0,0)';
-        //             item.className = item.className.replace(/ j-open/, '');
-        //         });
-        //         var oItem = e.target;
-        //         oItem.className = oItem.className += ' j-open';
-        //     });
-        //     oListItem.addEventListener('touchmove', function(e) {
-        //         e.preventDefault();
-        //         //console.log(e.touches[0])                
-        //         var nOffsetX = e.touches[0].pageX - gStartX,
-        //             oItem = e.target;
-        //         if (-150 < nOffsetX < 70) {
-        //             oItem.style.transform = 'translate3d(' + nOffsetX + 'px,0,0)';
-        //         }
-        //     });
-        //     oListItem.addEventListener('touchend', function(e) {
-        //         var oItem = e.target,
-        //             nOffsetX = fGetTranslate(oItem.style.transform)[0];
-        //         if (nOffsetX < -35) {
-        //             nOffsetX = -150;
-        //         } else if (nOffsetX > 35) {
-        //             nOffsetX = 70;
-        //         } else {
-        //             nOffsetX = 0;
-        //         }
-        //         oItem.style.transform = 'translate3d(' + nOffsetX + 'px,0,0)';
-        //     });
-        // }
-
-        // function fGetTranslate(sTransform) {
-        //     var aT = sTransform.split('(');
-        //     if (aT.length > 1) {
-        //         aT = aT[1].split(')');
-        //         aT = aT[0].split(',');
-        //         aT = aT.map(function(item) {
-        //             return parseInt(item);
-        //         });
-        //     } else {
-        //         aT = [0, 0, 0];
-        //     }
-        //     return aT;
-        // }
     </script>
 </body>
 
