@@ -47,7 +47,7 @@
             -webkit-transition: -webkit-transform .2s ease;
             position: relative;
             /*btn-wrap before no need*/
-            z-index: 1
+            /*z-index: 1*/
         }
         .btn-wrap {
             position: absolute;
@@ -118,15 +118,15 @@
                 ul.innerHTML = this.list.reduce(function(pre, cur) {
                     var aLi = [
                         '<li class="list-item">',
-                        '<div class="list-item-content">',
-                        '<span>' + cur.text + '</span>',
-                        '</div>',
-                         '<div class="btn-wrap">',
+                        '<div class="btn-wrap">',
                         '<span class="btn btn-edit">' + cur.edit + '</span>',
                         '<span class="r">',
                         '<span class="btn btn-mark">' + cur.mark + '</span><!--',
                         '--><span class="btn btn-delete">' + cur.delete + '</span>',
                         '</span>',
+                        '</div>',
+                        '<div class="list-item-content">',
+                        '<span>' + cur.text + '</span>',
                         '</div>',
                         '</li>',
                     ];
@@ -167,24 +167,25 @@
                     if (oItem.className.indexOf('list-item-content') > -1) {
                         var endTime = +new Date(),
                             startTime = self.startTime,
-                            boundary = 35,
+                            boundarySlow = 35,
+                            boundaryFast = 10,
                             nOffsetX = self.fGetTranslate(oItem.style.webkitTransform)[0],
                             leftBoundary = self.leftBoundary,
                             rightBoundary = self.rightBoundary;
-                            
+
                         if (endTime - startTime > 300) {
-                            if (nOffsetX < -boundary) {
+                            if (nOffsetX < -boundarySlow) {
                                 nOffsetX = leftBoundary;
-                            } else if (nOffsetX >= boundary) {
+                            } else if (nOffsetX >= boundarySlow) {
                                 nOffsetX = rightBoundary;
                             } else {
                                 nOffsetX = 0;
                             }
                         } else {
-                            
-                            if (nOffsetX < -boundary) {
+
+                            if (nOffsetX < -boundaryFast) {
                                 nOffsetX = leftBoundary;
-                            } else if (nOffsetX >= boundary) {
+                            } else if (nOffsetX >= boundaryFast) {
                                 nOffsetX = rightBoundary;
                             } else {
                                 nOffsetX = 0;
