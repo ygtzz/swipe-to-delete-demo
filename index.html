@@ -26,9 +26,7 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            height:300px;
             -webkit-overflow-scrolling: touch;
-            overflow: auto;
         }
         .list-title {
             width: 100%;
@@ -37,14 +35,12 @@
             padding: 15px 0;
             background-color: #eee;
         }
-        
         .list-item {
             position: relative;
             height: 50px;
             line-height: 50px;
             border-bottom: 1px solid #eee;
         }
-        
         .list-item-content {
             padding-left: 30px;
             background-color: #fff;
@@ -53,7 +49,6 @@
             /*btn-wrap before no need*/
             z-index: 1
         }
-        
         .btn-wrap {
             position: absolute;
             width: 100%;
@@ -61,26 +56,21 @@
             right: 0;
             top: 0
         }
-        
         .btn {
             display: inline-block;
             width: 70px;
             text-align: center;
         }
-        
         .btn-edit {
             background-color: orange;
         }
-        
         .btn-delete {
             background-color: red;
         }
-        
         .btn-mark {
             width: 80px;
             background-color: #ddd
         }
-        
         .r {
             float: right
         }
@@ -106,7 +96,6 @@
                 delete: '删除'
             }
         });
-
         function ItemSlider(opts) {
             this.wrap = opts.wrap;
             this.list = opts.list;
@@ -129,15 +118,15 @@
                 ul.innerHTML = this.list.reduce(function(pre, cur) {
                     var aLi = [
                         '<li class="list-item">',
-                        '<div class="btn-wrap">',
+                        '<div class="list-item-content">',
+                        '<span>' + cur.text + '</span>',
+                        '</div>',
+                         '<div class="btn-wrap">',
                         '<span class="btn btn-edit">' + cur.edit + '</span>',
                         '<span class="r">',
                         '<span class="btn btn-mark">' + cur.mark + '</span><!--',
                         '--><span class="btn btn-delete">' + cur.delete + '</span>',
                         '</span>',
-                        '</div>',
-                        '<div class="list-item-content">',
-                        '<span>' + cur.text + '</span>',
                         '</div>',
                         '</li>',
                     ];
@@ -167,7 +156,7 @@
                     if (oItem.className.indexOf('list-item-content') > -1) {
                         var nOffsetX = e.touches[0].pageX - self.offsetX,
                             nOffsetY = e.touches[0].pageY - self.offsetY;
-                        if (nOffsetY < 5 && self.leftBoundary < nOffsetX && nOffsetX < self.rightBoundary) {
+                        if (Math.abs(nOffsetY) < 10 && self.leftBoundary < nOffsetX && nOffsetX < self.rightBoundary) {
                             oItem.style.webkitTransition = '-webkit-transform 0 ease-out';
                             oItem.style.webkitTransform = 'translate3d(' + nOffsetX + 'px,0,0)';
                         }

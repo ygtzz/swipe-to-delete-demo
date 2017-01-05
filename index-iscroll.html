@@ -25,7 +25,6 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            overflow: auto;
         }
         .list-title {
             width: 100%;
@@ -156,7 +155,7 @@
                     if (oItem.className.indexOf('list-item-content') > -1) {
                         var nOffsetX = e.touches[0].pageX - self.offsetX,
                             nOffsetY = e.touches[0].pageY - self.offsetY;
-                        if (nOffsetY < 5 && self.leftBoundary < nOffsetX && nOffsetX < self.rightBoundary) {
+                        if (Math.abs(nOffsetY) < 10 && self.leftBoundary < nOffsetX && nOffsetX < self.rightBoundary) {
                             oItem.style.webkitTransition = '-webkit-transform 0 ease-out';
                             oItem.style.webkitTransform = 'translate3d(' + nOffsetX + 'px,0,0)';
                         }
