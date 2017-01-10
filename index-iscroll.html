@@ -58,6 +58,7 @@
             display: inline-block;
             width: 70px;
             text-align: center;
+            line-height: 48px;
         }
         .btn-edit {
             background-color: orange;
@@ -87,7 +88,7 @@
     </div>
     <script src="./lib/iscroll.js"></script>
     <script>
-        var json = Array.apply(null, { length: 20 }).map(function(item,index) {
+        var json = Array.apply(null, { length: 50 }).map(function(item,index) {
             return {
                 text: 'item' + (index+1),
                 edit: '编辑',
@@ -146,12 +147,8 @@
                         Array.prototype.forEach.call(self.wrap.querySelectorAll('.j-open'), function(item) {
                             item.style.webkitTransform = 'translate3d(0,0,0)';
                             item.className = item.className.replace(/ j-open/, '');
-                            self.fAddClass(item.parentNode.querySelector('.j-edit'),'op0');
-                            self.fAddClass(item.parentNode.querySelector('.j-delete'),'op0');
                         });
                         oItem.className += ' j-open';
-                        self.fRemoveClass(oItem.parentNode.querySelector('.j-edit'),'op0');
-                        self.fRemoveClass(oItem.parentNode.querySelector('.j-delete'),'op0');
                     }
                 });
                 this.wrap.addEventListener('touchmove', function(e) {
@@ -160,7 +157,10 @@
                     if (oItem.className.indexOf('list-item-content') > -1) {
                         var nOffsetX = e.touches[0].pageX - self.offsetX,
                             nOffsetY = e.touches[0].pageY - self.offsetY;
-                        if (Math.abs(nOffsetY) < 10 && self.leftBoundary < nOffsetX && nOffsetX < self.rightBoundary) {
+                        if(Math.abs(nOffsetY) > 10){
+                            return;
+                        }
+                        if (self.leftBoundary < nOffsetX && nOffsetX < self.rightBoundary) {
                             oItem.style.webkitTransition = '-webkit-transform 0 ease-out';
                             oItem.style.webkitTransform = 'translate3d(' + nOffsetX + 'px,0,0)';
                         }
@@ -173,10 +173,14 @@
                             startTime = self.startTime,
                             boundarySlow = 35,
                             boundaryFast = 10,
-                            nOffsetX = self.fGetTranslate(oItem.style.webkitTransform)[0],
+                            aTransform = self.fGetTranslate(oItem.style.webkitTransform),
+                            nOffsetX = aTransform[0],
+                            nOffsetY = aTransform[1],
                             leftBoundary = self.leftBoundary,
                             rightBoundary = self.rightBoundary;
-
+                        if(Math.abs(nOffsetY) > 0){
+                            return;
+                        }
                         if (endTime - startTime > 300) {
                             if (nOffsetX < -boundarySlow) {
                                 nOffsetX = leftBoundary;
@@ -204,12 +208,12 @@
                 oItem.style.webkitTransition = '-webkit-transform .2s ease-out';
                 oItem.style.webkitTransform = 'translate3d(' + nOffsetX + 'px,0,0)';
             },
-            fAddClass(ele,className){
+            fAddClass:function(ele,className){
                 if(!new RegExp('\s*' + className).test(ele.className)){
                     ele.className = ele.className + ' ' + className;
                 }
             },
-            fRemoveClass(ele,className){
+            fRemoveClass:function(ele,className){
                 ele.className = ele.className.replace(new RegExp('\s*' + className,'g'), '');
             },
             fGetTranslate: function(sTransform) {
