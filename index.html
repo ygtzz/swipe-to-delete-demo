@@ -157,11 +157,8 @@
                     if (oItem.className.indexOf('list-item-content') > -1) {
                         var nOffsetX = e.touches[0].pageX - self.offsetX,
                             nOffsetY = e.touches[0].pageY - self.offsetY;
-                        if(Math.abs(nOffsetY) > 10){
-                            return;
-                        }
-                        if (self.leftBoundary < nOffsetX && nOffsetX < self.rightBoundary) {
-                            oItem.style.webkitTransition = '-webkit-transform 0 ease-out';
+                        if (Math.abs(nOffsetX) > Math.abs(nOffsetY) && self.leftBoundary < nOffsetX && nOffsetX < self.rightBoundary) {
+                            oItem.style.webkitTransition = '';
                             oItem.style.webkitTransform = 'translate3d(' + nOffsetX + 'px,0,0)';
                         }
                     }
